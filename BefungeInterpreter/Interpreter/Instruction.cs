@@ -12,7 +12,6 @@ public class Instruction
 		_instructions
 			.New(' ', _ => { })
 			.New('@', _ => { })
-			//
 			.New('>', runtime => runtime.Caret.Direction = Vector2.Right)
 			.New('<', runtime => runtime.Caret.Direction = Vector2.Left)
 			.New('^', runtime => runtime.Caret.Direction = Vector2.Up)
@@ -28,7 +27,6 @@ public class Instruction
 				var _ => Vector2.Right
 			})
 			.New('#', runtime => runtime.Caret.MoveNext())
-			//
 			.New('+', runtime =>
 			{
 				var t = runtime.Pop2();
@@ -69,7 +67,6 @@ public class Instruction
 				runtime.Push(0);
 				runtime.Push(a);
 			})
-			//
 			.New('!', runtime => runtime.Push(runtime.Pop() == 0 ? 1 : 0))
 			.New('$', runtime => runtime.Pop())
 			.New('`', runtime =>
@@ -77,11 +74,9 @@ public class Instruction
 				var t = runtime.Pop2();
 				runtime.Push(t.B > t.A ? 1 : 0);
 			})
-			//
 			.New('.', runtime => runtime.Write(runtime.Pop()))
 			.New('"', runtime => runtime.ToggleStringMode())
 			.New(',', runtime => runtime.Write((char)runtime.Pop()))
-			//
 			.New('p', runtime =>
 			{
 				var y = runtime.Pop();
@@ -94,9 +89,7 @@ public class Instruction
 				var y = runtime.Pop();
 				var x = runtime.Pop();
 				runtime.Push(runtime.Code[y][x]);
-			})
-			;
-
+			});
 
 		for (var i = 0; i < 10; i++)
 		{
@@ -123,8 +116,6 @@ public class Instruction
 
 public static class DictionaryExtensions
 {
-	
-	
 	public static Dictionary<char, Instruction> New(this Dictionary<char, Instruction> dictionary, char name, Action<BefungeRuntime> action)
 	{
 		dictionary.Add(name, new(name, action));
